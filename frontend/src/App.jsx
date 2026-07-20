@@ -1,8 +1,77 @@
 import { useEffect, useState } from 'react';
 import logoCondimentosAbby from '../../images/Condimentos Abby.jpeg';
+import adoboCompletoImg from '../../images/imagenes de productos/adobocompleto.jpeg';
+import anisEstrelladoImg from '../../images/imagenes de productos/anisestrellado.jpeg';
+import calendulaImg from '../../images/imagenes de productos/calendula.jpeg';
+import canelaAstillaImg from '../../images/imagenes de productos/canelaastilla.jpeg';
+import canelaMolidaImg from '../../images/imagenes de productos/Canelamolida.jpg';
+import clavosImg from '../../images/imagenes de productos/Clavos.jpeg';
+import cocoImg from '../../images/imagenes de productos/Coco.jpeg';
+import colorImg from '../../images/imagenes de productos/color.jpeg';
+import cominoMolidoImg from '../../images/imagenes de productos/comino molido.jpeg';
+import cominoGranoImg from '../../images/imagenes de productos/cominograno.jpeg';
+import cominoPequenoImg from '../../images/imagenes de productos/cominopequeño.jpeg';
+import curcumaImg from '../../images/imagenes de productos/curcuma.jpeg';
+import florJamaicaImg from '../../images/imagenes de productos/florjamaica.jpeg';
+import jengibreMolidoImg from '../../images/imagenes de productos/jengibremolido.jpeg';
+import laurelImg from '../../images/imagenes de productos/Laurel.jpeg';
+import linazaImg from '../../images/imagenes de productos/linaza.jpeg';
+import linazaPequenaImg from '../../images/imagenes de productos/linazapequeña.jpeg';
+import manzanillaImg from '../../images/imagenes de productos/manzanilla.jpeg';
+import nuezMoscadaImg from '../../images/imagenes de productos/nuezmoscada.jpeg';
+import oreganoImg from '../../images/imagenes de productos/Oregano.jpeg';
+import paprikaImg from '../../images/imagenes de productos/paprika.jpeg';
+import pasasImg from '../../images/imagenes de productos/Pasas.jpeg';
+import pimientaMolidaImg from '../../images/imagenes de productos/pimientamolida.jpg';
+import sodaImg from '../../images/imagenes de productos/soda.jpeg';
+import sodaPequenaImg from '../../images/imagenes de productos/sodapequeña.jpeg';
+import tomilloImg from '../../images/imagenes de productos/Tomillo.jpeg';
 
 const API_BASE_URL = '/api';
 const API_URL = `${API_BASE_URL}/productos`;
+
+const imagenesProductos = {
+  'adobo completo': adoboCompletoImg,
+  'anis estrellado': anisEstrelladoImg,
+  'aniz estrellado': anisEstrelladoImg,
+  calendula: calendulaImg,
+  'canela en astilla': canelaAstillaImg,
+  'canela molida': canelaMolidaImg,
+  clavos: clavosImg,
+  coco: cocoImg,
+  color: colorImg,
+  'comino molido': cominoMolidoImg,
+  'comino en grano': cominoGranoImg,
+  'comino pequeno': cominoPequenoImg,
+  curcuma: curcumaImg,
+  'flor de jamaica': florJamaicaImg,
+  'flor jamaica': florJamaicaImg,
+  'jengibre molido': jengibreMolidoImg,
+  laurel: laurelImg,
+  linaza: linazaImg,
+  'linaza pequena': linazaPequenaImg,
+  manzanilla: manzanillaImg,
+  'nuez moscada': nuezMoscadaImg,
+  oregano: oreganoImg,
+  paprika: paprikaImg,
+  pasas: pasasImg,
+  'pimienta molida': pimientaMolidaImg,
+  soda: sodaImg,
+  'soda pequena': sodaPequenaImg,
+  tomillo: tomilloImg,
+};
+
+const normalizarNombreProducto = (nombre) =>
+  nombre
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const obtenerImagenProducto = (nombreProducto) =>
+  imagenesProductos[normalizarNombreProducto(nombreProducto)] ?? logoCondimentosAbby;
 
 const numerosWhatsApp = [
   '3043674857',
@@ -124,8 +193,8 @@ export default function App() {
                 <div className="flex h-full flex-col gap-5">
                   <div className="overflow-hidden rounded-2xl border-2 border-yellow-400 bg-white p-3">
                     <img
-                      src={logoCondimentosAbby}
-                      alt="Perrito de Condimentos Abby"
+                      src={obtenerImagenProducto(producto.nombre)}
+                      alt={producto.nombre}
                       className="h-40 w-full object-contain"
                     />
                   </div>
