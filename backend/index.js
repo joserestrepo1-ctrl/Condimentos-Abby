@@ -35,6 +35,10 @@ app.get('/health', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`API lista en http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`API lista en http://localhost:${port}`);
+  });
+}
+
+module.exports = app;
