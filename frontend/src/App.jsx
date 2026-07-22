@@ -27,8 +27,8 @@ import sodaImg from '../../images/imagenes de productos/soda.jpeg';
 import sodaPequenaImg from '../../images/imagenes de productos/sodapequeña.jpeg';
 import tomilloImg from '../../images/imagenes de productos/Tomillo.jpeg';
 
-const API_BASE_URL = '/api';
-const API_URL = `${API_BASE_URL}/productos`;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') || '';
+const API_URL = `${API_BASE_URL}/api/productos`;
 
 const imagenesProductos = {
   'adobo completo': adoboCompletoImg,
