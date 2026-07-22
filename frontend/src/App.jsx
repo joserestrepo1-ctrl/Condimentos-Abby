@@ -230,10 +230,6 @@ export default function App() {
           </div>
         </section>
 
-        <footer className="pb-4 text-center text-sm text-gray-700">
-          Cambia el número de prueba editando <span className="font-bold text-yellow-600">numerosWhatsApp[0]</span> a{' '}
-          <span className="font-bold text-red-600">numerosWhatsApp[1]</span> cuando quieras usar el número real.
-        </footer>
       </section>
     </main>
   );
