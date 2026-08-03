@@ -86,6 +86,7 @@ export default function App() {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [carrito, setCarrito] = useState({});
 
   useEffect(() => {
     const cargarProductos = async () => {
@@ -111,6 +112,70 @@ export default function App() {
 
   const crearLinkWhatsApp = (producto) => {
     const mensaje = `Hola, quiero pedir ${producto.nombre} que cuesta $${formatearPrecio(producto.precio)}`;
+    return `https://wa.me/${numeroWhatsAppPrincipal}?text=${encodeURIComponent(mensaje)}`;
+  };
+
+  const agregarProductoAlCarrito = (producto) => {
+    setCarrito((carritoActual) => ({
+      ...carritoActual,
+      [producto.id]: {
+        producto,
+        cantidad: (carritoActual[producto.id]?.cantidad ?? 0) + 1,
+      },
+    }));
+  };
+
+  const disminuirProductoDelCarrito = (producto) => {
+    setCarrito((carritoActual) => {
+      const itemActual = carritoActual[producto.id];
+
+      if (!itemActual) {
+        return carritoActual;
+      }
+
+      if (itemActual.cantidad <= 1) {
+        const { [producto.id]: _eliminado, ...resto } = carritoActual;
+        return resto;
+      }
+
+      return {
+        ...carritoActual,
+        [producto.id]: {
+          ...itemActual,
+          cantidad: itemActual.cantidad - 1,
+        },
+      };
+    });
+  };
+
+  const eliminarProductoDelCarrito = (producto) => {
+    setCarrito((carritoActual) => {
+      if (!carritoActual[producto.id]) {
+        return carritoActual;
+      }
+
+      const { [producto.id]: _eliminado, ...resto } = carritoActual;
+      return resto;
+    });
+  };
+
+  const productosEnCarrito = Object.values(carrito);
+  const totalProductosSeleccionados = productosEnCarrito.reduce((total, item) => total + item.cantidad, 0);
+  const totalPedido = productosEnCarrito.reduce((total, item) => total + item.cantidad * Number(item.producto.precio), 0);
+
+  const crearMensajePedidoWhatsApp = () => {
+    const lineasPedido = productosEnCarrito.map((item) => {
+      const subtotal = item.cantidad * Number(item.producto.precio);
+      return `- ${item.cantidad}x ${item.producto.nombre} - $${formatearPrecio(subtotal)}`;
+    });
+
+    const mensaje = [
+      '¡Hola! Quisiera realizar el siguiente pedido:',
+      ...lineasPedido,
+      '',
+      `Total pedido: $${formatearPrecio(totalPedido)}`,
+    ].join('\n');
+
     return `https://wa.me/${numeroWhatsAppPrincipal}?text=${encodeURIComponent(mensaje)}`;
   };
 
@@ -175,7 +240,7 @@ export default function App() {
             </div>
           )}
 
-          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-6 pb-28 sm:grid-cols-2 xl:grid-cols-3">
             {productos.map((producto) => (
               <article
                 key={producto.id}
@@ -205,21 +270,95 @@ export default function App() {
                     <p className="mt-1 text-3xl font-black text-black">${formatearPrecio(producto.precio)}</p>
                   </div>
 
-                  <div className="mt-auto flex items-center gap-3">
-                    <a
-                      href={crearLinkWhatsApp(producto)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex flex-1 items-center justify-center rounded-2xl bg-green-600 px-5 py-3 font-bold text-white transition hover:bg-green-700 hover:shadow-lg"
+                  <div className="mt-auto flex flex-col gap-3">
+                    <div className="flex items-center justify-between gap-3 rounded-2xl border-2 border-yellow-400 bg-white p-3">
+                      <button
+                        type="button"
+                        onClick={() => disminuirProductoDelCarrito(producto)}
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-2xl font-black text-gray-700 transition hover:bg-gray-200"
+                        aria-label={`Disminuir cantidad de ${producto.nombre}`}
+                      >
+                        -
+                      </button>
+
+                      <div className="text-center">
+                        <p className="text-xs font-bold uppercase tracking-[0.2em] text-yellow-600">Cantidad</p>
+                        <p className="text-2xl font-black text-gray-900">{carrito[producto.id]?.cantidad ?? 0}</p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => agregarProductoAlCarrito(producto)}
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-green-600 text-2xl font-black text-white transition hover:bg-green-700"
+                        aria-label={`Agregar una unidad de ${producto.nombre}`}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => agregarProductoAlCarrito(producto)}
+                      className="inline-flex items-center justify-center rounded-2xl bg-green-600 px-5 py-3 font-bold text-white transition hover:bg-green-700 hover:shadow-lg"
                     >
-                      Pedir por WhatsApp
-                    </a>
+                      Agregar al pedido
+                    </button>
                   </div>
                 </div>
               </article>
             ))}
           </div>
         </section>
+
+        {totalProductosSeleccionados > 0 && (
+          <div className="fixed inset-x-0 bottom-0 z-50 px-4 pb-4 sm:px-6 lg:px-8">
+            <div className="mx-auto flex max-w-7xl flex-col gap-4 rounded-[1.75rem] border-2 border-yellow-400 bg-white/95 p-4 shadow-2xl backdrop-blur sm:flex-row sm:items-center sm:justify-between sm:p-5">
+              <div className="flex flex-col gap-1">
+                <p className="text-sm font-bold uppercase tracking-[0.25em] text-yellow-600">Pedido activo</p>
+                <p className="text-lg font-semibold text-gray-900">
+                  {totalProductosSeleccionados} producto{totalProductosSeleccionados === 1 ? '' : 's'} seleccionado{totalProductosSeleccionados === 1 ? '' : 's'}
+                </p>
+                <p className="text-sm font-semibold text-gray-700">Total acumulado: ${formatearPrecio(totalPedido)}</p>
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="flex flex-wrap gap-2">
+                  {productosEnCarrito.slice(0, 3).map((item) => (
+                    <span
+                      key={item.producto.id}
+                      className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-semibold text-gray-800"
+                    >
+                      {item.cantidad}x {item.producto.nombre}
+                    </span>
+                  ))}
+                  {productosEnCarrito.length > 3 && (
+                    <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
+                      +{productosEnCarrito.length - 3} más
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setCarrito({})}
+                    className="inline-flex items-center justify-center rounded-2xl border-2 border-gray-300 bg-white px-5 py-3 font-bold text-gray-700 transition hover:border-gray-400 hover:bg-gray-50"
+                  >
+                    Vaciar
+                  </button>
+                  <a
+                    href={crearMensajePedidoWhatsApp()}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center rounded-2xl bg-green-600 px-5 py-3 font-bold text-white transition hover:bg-green-700 hover:shadow-lg"
+                  >
+                    Pedir por WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
       </section>
     </main>
