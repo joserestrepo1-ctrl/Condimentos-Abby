@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import logoCondimentosAbby from '../../images/Condimentos Abby.jpeg';
+import logoCondimentosAbby from '../../images/imagenes de productos/Abby Logo.png';
 import adoboCompletoImg from '../../images/imagenes de productos/adobocompleto.jpeg';
 import anisEstrelladoImg from '../../images/imagenes de productos/anisestrellado.jpeg';
 import calendulaImg from '../../images/imagenes de productos/calendula.jpeg';
@@ -128,10 +128,10 @@ export default function App() {
                 <img
                   src={logoCondimentosAbby}
                   alt="Condimentos Abby"
-                  className="h-28 w-auto max-w-[180px] object-contain sm:h-32 sm:max-w-[220px]"
+                  className="h-20 w-auto max-h-[96px] object-contain sm:h-24"
                 />
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-yellow-600">Marca oficial</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-yellow-600">MARCA OFICIAL</p>
                   <span className="block text-2xl font-black text-red-600 sm:text-3xl">Condimentos Abby</span>
                 </div>
               </div>
