@@ -73,10 +73,8 @@ const normalizarNombreProducto = (nombre) =>
 const obtenerImagenProducto = (nombreProducto) =>
   imagenesProductos[normalizarNombreProducto(nombreProducto)] ?? logoCondimentosAbby;
 
-const numerosWhatsApp = [
-  '3043674857',
-  '5492222222222',
-];
+const numeroWhatsAppVisible = '3234506510';
+const numeroWhatsAppPrincipal = '573234506510';
 
 const formatearPrecio = (precio) =>
   new Intl.NumberFormat('es-CO', {
@@ -111,8 +109,6 @@ export default function App() {
     cargarProductos();
   }, []);
 
-  const numeroWhatsAppPrincipal = numerosWhatsApp[0];
-
   const crearLinkWhatsApp = (producto) => {
     const mensaje = `Hola, quiero pedir ${producto.nombre} que cuesta $${formatearPrecio(producto.precio)}`;
     return `https://wa.me/${numeroWhatsAppPrincipal}?text=${encodeURIComponent(mensaje)}`;
@@ -135,8 +131,8 @@ export default function App() {
                   <span className="block text-2xl font-black text-red-600 sm:text-3xl">Condimentos Abby</span>
                 </div>
               </div>
-              <h1 className="mt-4 text-xl font-semibold leading-tight tracking-tight text-gray-900 font-sans sm:text-2xl md:text-3xl lg:text-4xl">
-                <span className="block max-w-full rounded-full bg-white px-5 py-2 text-center text-black shadow-sm ring-2 ring-yellow-400 whitespace-normal md:inline-block md:w-auto md:whitespace-nowrap md:px-6">
+              <h1 className="mt-4 text-3xl font-semibold leading-[1.15] tracking-tight text-gray-900 font-sans sm:text-4xl lg:text-5xl">
+                <span className="inline-block w-auto rounded-full bg-white px-[15px] py-2 text-black shadow-sm ring-2 ring-yellow-400 whitespace-nowrap">
                   Cocina con pasión, sazona con Abby.
                 </span>
               </h1>
@@ -149,7 +145,7 @@ export default function App() {
               <div className="flex items-center justify-between gap-4">
                 <span className="font-semibold">WhatsApp principal</span>
                 <span className="rounded-full bg-green-600 px-3 py-1 font-black text-white shadow-sm ring-2 ring-green-700">
-                  {numeroWhatsAppPrincipal}
+                  {numeroWhatsAppVisible}
                 </span>
               </div>
               <div className="flex items-center justify-between gap-4">
