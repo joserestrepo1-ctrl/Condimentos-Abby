@@ -137,9 +137,8 @@ export default function App() {
               </div>
               <h1 className="mt-4 text-4xl font-black tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
                 <span className="inline-block rounded-full bg-white px-3 py-1 text-black shadow-sm ring-2 ring-yellow-400">
-                  Especias premium
-                </span>{' '}
-                para elevar cada comida.
+                  Cocina con pasión, <br className="sm:hidden" /> sazona con Abby.
+                </span>
               </h1>
               <p className="mt-4 max-w-xl text-base leading-7 text-gray-700 sm:text-lg">
                 Catálogo simple, rápido y orientado a conversión. El cliente ve el producto y pide por WhatsApp en un clic.
