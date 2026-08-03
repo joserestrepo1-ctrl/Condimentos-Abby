@@ -136,7 +136,7 @@ export default function App() {
                 </div>
               </div>
               <h1 className="mt-4 text-3xl font-semibold leading-[1.15] tracking-tight text-gray-900 font-sans sm:text-4xl lg:text-5xl">
-                <span className="inline-block w-fit max-w-full rounded-full bg-white px-6 py-2 text-black shadow-sm ring-2 ring-yellow-400 whitespace-normal md:whitespace-nowrap">
+                <span className="inline-block w-auto rounded-full bg-white px-[15px] py-2 text-black shadow-sm ring-2 ring-yellow-400 whitespace-nowrap">
                   Cocina con pasión, sazona con Abby.
                 </span>
               </h1>
