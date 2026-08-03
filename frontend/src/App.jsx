@@ -135,9 +135,10 @@ export default function App() {
                   <span className="block text-2xl font-black text-red-600 sm:text-3xl">Condimentos Abby</span>
                 </div>
               </div>
-              <h1 className="mt-4 text-4xl font-black tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-                <span className="inline-block rounded-full bg-white px-3 py-1 text-black shadow-sm ring-2 ring-yellow-400">
-                  Cocina con pasión, <br className="sm:hidden" /> sazona con Abby.
+              <h1 className="mt-4 text-4xl font-semibold leading-[1.12] tracking-tight text-gray-900 font-sans sm:text-5xl lg:text-6xl">
+                <span className="inline-flex w-fit max-w-full flex-col rounded-full bg-white px-6 py-3 text-black shadow-sm ring-2 ring-yellow-400">
+                  <span>Cocina con pasión,</span>
+                  <span>sazona con Abby.</span>
                 </span>
               </h1>
               <p className="mt-4 max-w-xl text-base leading-7 text-gray-700 sm:text-lg">
