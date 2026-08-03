@@ -146,16 +146,12 @@ export default function App() {
               </p>
             </div>
 
-            <div className="grid gap-3 rounded-3xl border-2 border-yellow-400 bg-white p-5 text-sm text-gray-800 sm:min-w-80">
+            <div className="grid gap-4 rounded-3xl border-2 border-yellow-400 bg-white p-6 text-sm text-gray-800 sm:min-w-80">
               <div className="flex items-center justify-between gap-4">
                 <span className="font-semibold">WhatsApp principal</span>
                 <span className="rounded-full bg-green-600 px-3 py-1 font-black text-white shadow-sm ring-2 ring-green-700">
                   {numeroWhatsAppPrincipal}
                 </span>
-              </div>
-              <div className="flex items-center justify-between gap-4">
-                <span className="font-semibold">API</span>
-                <span className="font-black text-yellow-600">{API_URL}</span>
               </div>
               <div className="flex items-center justify-between gap-4">
                 <span className="font-semibold">Estado</span>
