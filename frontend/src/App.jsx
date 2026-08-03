@@ -133,7 +133,7 @@ export default function App() {
               </div>
               <h1 className="mt-4 text-3xl font-semibold leading-[1.15] tracking-tight text-gray-900 font-sans sm:text-4xl lg:text-5xl">
                 <span className="inline-block w-auto rounded-full bg-white px-[15px] py-2 text-black shadow-sm ring-2 ring-yellow-400 whitespace-nowrap">
-                  Cocina con pasión, sazona con Abby.
+                  Dale vida a cada plato.
                 </span>
               </h1>
               <p className="mt-4 max-w-xl text-base leading-7 text-gray-700 sm:text-lg">
