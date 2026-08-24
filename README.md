@@ -7,8 +7,13 @@ Catálogo web de productos y especias de Condimentos Abby. Los clientes pueden c
 - React 19 y Vite
 - Tailwind CSS
 - Node.js y Express
-- PostgreSQL
-- Docker Compose
+- Supabase (PostgreSQL gestionado)
+- Vercel (deploy y dominio)
+
+## Despliegue
+
+- Frontend desplegado en Vercel
+- Dominio principal: https://www.abbyj.me
 
 ## Estructura del proyecto
 
@@ -34,7 +39,7 @@ Catálogo web de productos y especias de Condimentos Abby. Los clientes pueden c
 ## Cómo funciona
 
 1. El frontend solicita los productos al backend.
-2. El backend consulta la tabla `productos` en PostgreSQL.
+2. El backend consulta la tabla `productos` en Supabase (PostgreSQL).
 3. React muestra el catálogo con imágenes, precios y stock.
 4. El cliente agrega productos al carrito.
 5. El sistema genera un mensaje y abre WhatsApp para enviar el pedido.
@@ -45,27 +50,28 @@ El carrito se mantiene temporalmente en el navegador. Actualmente los pedidos no
 
 - Node.js 20 o superior
 - npm
-- PostgreSQL, o Docker Desktop para usar Docker Compose
+- Proyecto de Supabase
+- Docker Desktop (opcional, solo para desarrollo local con Docker Compose)
 
 ## Configuración del backend
 
 Crea o configura `backend/.env` con una cadena de conexión válida:
 
 ```env
-DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/abby_db
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/DBNAME
 PORT=3000
 ```
 
-No subas contraseñas reales al repositorio.
+No subas secretos ni credenciales reales al repositorio.
 
 La tabla requerida es:
 
 ```sql
 CREATE TABLE productos (
-	id SERIAL PRIMARY KEY,
-	nombre VARCHAR(150) NOT NULL,
-	cantidad INTEGER NOT NULL,
-	precio NUMERIC NOT NULL
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(150) NOT NULL,
+  cantidad INTEGER NOT NULL,
+  precio NUMERIC NOT NULL
 );
 ```
 
@@ -111,12 +117,12 @@ Devuelve los productos ordenados por `id`:
 
 ```json
 [
-	{
-		"id": 1,
-		"nombre": "Canela molida",
-		"cantidad": 20,
-		"precio": 5000
-	}
+  {
+    "id": 1,
+    "nombre": "Canela molida",
+    "cantidad": 20,
+    "precio": 5000
+  }
 ]
 ```
 
@@ -128,23 +134,22 @@ GET /api/health
 
 Devuelve el estado de la API y la hora del servidor de base de datos.
 
-## Docker Compose
+## Docker Compose (solo desarrollo local)
 
-Para iniciar PostgreSQL, backend y frontend:
+Docker Compose se usa únicamente para levantar servicios en entorno local durante el desarrollo.
+No se utiliza para el despliegue en producción.
+
+Para iniciar servicios locales:
 
 ```bash
 docker compose up --build
 ```
 
-La aplicación estará disponible en `http://localhost:8080` y la API en `http://localhost:3000`.
-
-Para detener los servicios:
+Para detenerlos:
 
 ```bash
 docker compose down
 ```
-
-Los datos de PostgreSQL se conservan en el volumen `postgres_data`.
 
 ## Build de producción
 
@@ -159,7 +164,7 @@ En producción, la URL de la API se configura mediante `frontend/.env.production
 
 ## Limitaciones actuales
 
-- Los pedidos no se almacenan en PostgreSQL.
+- Los pedidos no se almacenan en la base de datos.
 - El stock no se descuenta automáticamente.
 - No existe un panel administrativo.
 - Las imágenes se relacionan con los productos mediante su nombre.
